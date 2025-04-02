@@ -3,8 +3,8 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "Shoot Config", menuName = "Turrets/Shoot Configuration, order = 2")]
 public class ShootConfigSO : ScriptableObject
 {
-    public LayerMask hitMask;
-    public Vector3 spread;
-    public Vector3 delay;
-    public Vector3 burstDelay;
+    public LayerMask HitMask;
+    public Vector3 Spread;
+    public float FireRate = 0.25f;
+    public float BurstRate = 0.5f;
 }
