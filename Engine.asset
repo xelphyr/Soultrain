@@ -19,6 +19,6 @@ MonoBehaviour:
   moveSpeed: 5
   engineSprite: {fileID: 21300000, guid: 4ae8605e339797e41baad019b77301b8, type: 3}
   enginePrefab: {fileID: 1144849626220720427, guid: 6b0ccce8b68ac764dbd18390fcf87598, type: 3}
-  defaultWeapon: {fileID: 11400000, guid: f86265ee10cfd6a4eabde71074954e9f, type: 2}
+  defaultWeapon: {fileID: 0}
   regenRate: 0
   immuneToStun: 0

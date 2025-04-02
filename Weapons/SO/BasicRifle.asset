@@ -9,22 +9,14 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 721c334904973534fa5ef885e7a9b655, type: 3}
+  m_Script: {fileID: 11500000, guid: a78a823abe0f41789a3b3360745e9a5e, type: 3}
   m_Name: BasicRifle
   m_EditorClassIdentifier: 
-  weaponName: Basic Rifle
-  description: Your first turret. It's bad, but it gets the job done.
-  weaponType: 0
-  weaponRange: 50
-  launcherType: 0
-  bulletPrefab: {fileID: 5685837637693025776, guid: fafe038438c9d72458a2508f694bcf40, type: 3}
-  bulletForce: 250
-  bulletDelay: 0.5
-  bulletDamage: 10
-  explosionRadius: 0
-  laserDamagePerSecond: 5
-  laserLength: 20
-  shieldDuration: 5
-  cooldown: 10
-  icon: {fileID: 0}
-  turretPrefab: {fileID: 2337441287886330018, guid: f042ff66a3c591c4a9897e236914b69e, type: 3}
+  Type: 0
+  Name: Basic Rifle
+  ModelPrefab: {fileID: 2337441287886330018, guid: f042ff66a3c591c4a9897e236914b69e, type: 3}
+  SpawnPoint: {x: 0, y: 0, z: 0}
+  SpawnRotation: {x: 0, y: 0, z: 0}
+  ShootConfig: {fileID: 11400000, guid: fffb8649b3a1e8947a10d11859aceed3, type: 2}
+  TrailConfig: {fileID: 11400000, guid: 45f331ccc57f23341b05f63ad4ec4e22, type: 2}
+  DamageConfig: {fileID: 0}

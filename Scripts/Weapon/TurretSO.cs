@@ -2,7 +2,7 @@ using System.Collections;
 using UnityEngine;
 using UnityEngine.Pool;
 
-[CreateAssetMenu(fileName = "Turret", menuName = "Turrets/Turre, order = 0")]
+[CreateAssetMenu(fileName = "Turret", menuName = "Turrets/Turret", order = 0)]
 public class TurretSO : ScriptableObject
 {
     public TurretType Type;
@@ -13,6 +13,7 @@ public class TurretSO : ScriptableObject
 
     public ShootConfigSO ShootConfig;
     public TrailConfigSO TrailConfig;
+    public DamageConfigSO DamageConfig;
 
     private MonoBehaviour ActiveMonoBehaviour;
     private GameObject Model;
@@ -25,7 +26,7 @@ public class TurretSO : ScriptableObject
         this.ActiveMonoBehaviour = ActiveMonoBehaviour;
         LastShootTime = 0;
         TrailPool = new ObjectPool<TrailRenderer>(CreateTrail);
-        Model = Instantiate(Model);
+        Model = Instantiate(ModelPrefab);
         Model.transform.SetParent(Parent, false);
         Model.transform.localPosition = SpawnPoint;
         Model.transform.localRotation = Quaternion.Euler(SpawnRotation);
@@ -65,7 +66,7 @@ public class TurretSO : ScriptableObject
             {
                 ActiveMonoBehaviour.StartCoroutine(
                     PlayTrail(
-                        ShootSystem.transform.position,
+                        ShootSystem.transform,
                         hit.point,
                         hit
                     )
@@ -75,7 +76,7 @@ public class TurretSO : ScriptableObject
             {
                 ActiveMonoBehaviour.StartCoroutine(
                     PlayTrail(
-                        ShootSystem.transform.position,
+                        ShootSystem.transform,
                         ShootSystem.transform.position + (shootDirection*TrailConfig.MissDistance),
                         new RaycastHit()
                     )
@@ -100,15 +101,15 @@ public class TurretSO : ScriptableObject
         return trail;
     }
 
-    private IEnumerator PlayTrail(Vector3 StartPoint, Vector3 EndPoint, RaycastHit Hit)
+    private IEnumerator PlayTrail(Transform StartPointTransform, Vector3 EndPoint, RaycastHit Hit)
     {
         TrailRenderer instance = TrailPool.Get();
         instance.gameObject.SetActive(true);
-        instance.transform.position = StartPoint;
+        instance.transform.position = StartPointTransform.position;
         yield return null;
 
         instance.emitting = true;
-
+        Vector3 StartPoint = StartPointTransform.position;
         float distance = Vector3.Distance(StartPoint, EndPoint);
         float remainingDistance = distance;
         while (remainingDistance > 0)
@@ -123,6 +124,14 @@ public class TurretSO : ScriptableObject
         }
 
         instance.transform.position = EndPoint;
+
+        if (Hit.collider != null)
+        {
+            if (Hit.collider.TryGetComponent(out IDamageable damageable))
+            {
+                damageable.TakeDamage(DamageConfig.GetDamage(distance));
+            }
+        }
         
         yield return new WaitForSeconds(TrailConfig.Duration);
         yield return null;

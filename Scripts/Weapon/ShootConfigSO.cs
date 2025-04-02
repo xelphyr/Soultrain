@@ -1,6 +1,6 @@
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "Shoot Config", menuName = "Turrets/Shoot Configuration, order = 2")]
+[CreateAssetMenu(fileName = "Shoot Config", menuName = "Turrets/Shoot Configuration", order = 2)]
 public class ShootConfigSO : ScriptableObject
 {
     public LayerMask HitMask;

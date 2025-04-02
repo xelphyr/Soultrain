@@ -14,6 +14,8 @@ GameObject:
   - component: {fileID: 805122023335126254}
   - component: {fileID: 6382832147724093771}
   - component: {fileID: 2686057168506177292}
+  - component: {fileID: 3266946333760950324}
+  - component: {fileID: 2906281435281326831}
   m_Layer: 6
   m_Name: Trailer
   m_TagString: Untagged
@@ -150,6 +152,37 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8d8762f3cc8226b469e64c4f453b1b10, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &3266946333760950324
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 800309992065589278}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a78d627d4d294d3abcf27c275bf6d479, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Turret: 0
+  TurretParent: {fileID: 7922952339297881766}
+  Turrets:
+  - {fileID: 11400000, guid: fb3aa536cb84f8e409bb4faba168564c, type: 2}
+  ActiveTuret: {fileID: 0}
+--- !u!114 &2906281435281326831
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 800309992065589278}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 081a2ec30c444fcc8607e36895113391, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  isEngineControlled: 0
+  TurretSelector: {fileID: 3266946333760950324}
 --- !u!1 &2982401873732434649
 GameObject:
   m_ObjectHideFlags: 0

@@ -2,19 +2,25 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.AI;
 
-public class Health : MonoBehaviour
+public class Health : MonoBehaviour, IDamageable
 {
-    [SerializeField] public float maxHealth = 100f;
-    [SerializeField] public Image healthBar;  // Used for static UI like train
+    [SerializeField] private float _maxHealth = 100f;
 
     private float _health;
-    public float health => _health;
+    [SerializeField] public Image healthBar; // Used for static UI like train
+
     private Animator animator;
     private NavMeshAgent agent;
 
     private HealthBarUI dynamicBar; // For enemies with pooled UI
 
-    void Start()
+    public int CurrentHealth { get => _health; private set => _health = value; }
+    public int MaxHealth { get => _maxHealth; private set => _maxHealth = value; }
+    public event IDamageable.TakeDamageEvent OnTakeDamage;
+
+    public event IDamageable.DeathEvent OnDeath;
+
+    void OnEnable()
     {
         Invoke(nameof(InitHealth), 0.1f);
 
@@ -27,7 +33,6 @@ public class Health : MonoBehaviour
             dynamicBar = HealthBarManager.Instance.GetHealthBar(transform);
         }
     }
-
     public void TakeDamage(float damage)
     {
         _health -= damage;

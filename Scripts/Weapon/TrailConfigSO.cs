@@ -1,6 +1,6 @@
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "Trail Config", menuName = "Turrets/Turret Trail, order = 4")]
+[CreateAssetMenu(fileName = "Trail Config", menuName = "Turrets/Turret Trail", order = 4)]
 public class TrailConfigSO : ScriptableObject
 {
     public Material Material;

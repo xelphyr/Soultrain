@@ -21,6 +21,13 @@ public class TrailerTurretSelector : MonoBehaviour
     private void Start()
     {  
         TurretSO turret = Turrets.Find(turret => turret.Type == Turret);
+        if (turret == null)
+        {
+            Debug.LogError($"No TurretSO found for TurretType: {Turret}");
+            return;
+        }
+        ActiveTuret = turret;
+        turret.Spawn(TurretParent, this);
     }
     
 }
