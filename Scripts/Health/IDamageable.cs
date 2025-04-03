@@ -1,14 +1,12 @@
 using UnityEngine;
+using System;
 public interface IDamageable
 {
-    public int CurrentHealth { get;  }
-    public int MaxHealth { get;  }
+    public float CurrentHealth { get;  }
+    public float MaxHealth { get;  }
 
-    public delegate void TakeDamageEvent(int Damage);
-    public event TakeDamageEvent OnTakeDamage;
-    
-    public delegate void DeathEvent(Vector3 Position);
-    public event DeathEvent OnDeath;
+    public event Action<float> OnTakeDamage;
+    public event Action<Vector3> OnDeath;
 
     public void TakeDamage(float damage);
 }

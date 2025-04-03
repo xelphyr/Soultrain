@@ -5,7 +5,7 @@ using UnityEngine.Pool;
 [CreateAssetMenu(fileName = "Turret", menuName = "Turrets/Turret", order = 0)]
 public class TurretSO : ScriptableObject
 {
-    public TurretType Type;
+    public Turret Type;
     public string Name;
     public GameObject ModelPrefab;
     public Vector3 SpawnPoint;
@@ -13,7 +13,7 @@ public class TurretSO : ScriptableObject
 
     public ShootConfigSO ShootConfig;
     public TrailConfigSO TrailConfig;
-    public DamageConfigSO DamageConfig;
+    public Stats baseStats;
 
     private MonoBehaviour ActiveMonoBehaviour;
     private GameObject Model;
@@ -35,55 +35,11 @@ public class TurretSO : ScriptableObject
         
     }
 
-    public void Shoot()
+    public void Shoot(Stats stats)
     {
-        if (Time.time > ShootConfig.FireRate + LastShootTime)
-        {
-            LastShootTime = Time.time;
-            ShootSystem.Play();
-            Vector3 shootDirection = ShootSystem.transform.forward
-            + new Vector3(
-                Random.Range(
-                    -ShootConfig.Spread.x,
-                    ShootConfig.Spread.x
-                ),
-                Random.Range(
-                    -ShootConfig.Spread.y,
-                    ShootConfig.Spread.y
-                ),
-                Random.Range(
-                    -ShootConfig.Spread.z,
-                    ShootConfig.Spread.z
-                )
-            );
-            shootDirection.Normalize();
-            if (Physics.Raycast(
-                    ShootSystem.transform.position,
-                    shootDirection,
-                    out RaycastHit hit,
-                    float.MaxValue,
-                    ShootConfig.HitMask))
-            {
-                ActiveMonoBehaviour.StartCoroutine(
-                    PlayTrail(
-                        ShootSystem.transform,
-                        hit.point,
-                        hit
-                    )
-                );
-            }
-            else
-            {
-                ActiveMonoBehaviour.StartCoroutine(
-                    PlayTrail(
-                        ShootSystem.transform,
-                        ShootSystem.transform.position + (shootDirection*TrailConfig.MissDistance),
-                        new RaycastHit()
-                    )
-                );
-            }
-        }
+        ShootConfig.Shoot(stats);
     }
+    
 
     private TrailRenderer CreateTrail()
     {
@@ -101,7 +57,7 @@ public class TurretSO : ScriptableObject
         return trail;
     }
 
-    private IEnumerator PlayTrail(Transform StartPointTransform, Vector3 EndPoint, RaycastHit Hit)
+    private IEnumerator PlayTrail(Transform StartPointTransform, Vector3 EndPoint, RaycastHit Hit, float Damage)
     {
         TrailRenderer instance = TrailPool.Get();
         instance.gameObject.SetActive(true);
@@ -129,7 +85,7 @@ public class TurretSO : ScriptableObject
         {
             if (Hit.collider.TryGetComponent(out IDamageable damageable))
             {
-                damageable.TakeDamage(DamageConfig.GetDamage(distance));
+                damageable.TakeDamage(Damage);
             }
         }
         

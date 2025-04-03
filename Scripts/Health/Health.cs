@@ -1,6 +1,8 @@
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.AI;
+using System;
 
 public class Health : MonoBehaviour, IDamageable
 {
@@ -14,15 +16,15 @@ public class Health : MonoBehaviour, IDamageable
 
     private HealthBarUI dynamicBar; // For enemies with pooled UI
 
-    public int CurrentHealth { get => _health; private set => _health = value; }
-    public int MaxHealth { get => _maxHealth; private set => _maxHealth = value; }
-    public event IDamageable.TakeDamageEvent OnTakeDamage;
+    public float CurrentHealth { get => _health; private set => _health = value; }
+    public float MaxHealth { get => _maxHealth; private set => _maxHealth = value; }
+    public event Action<float> OnTakeDamage;
 
-    public event IDamageable.DeathEvent OnDeath;
+    public event Action<Vector3> OnDeath;
 
     void OnEnable()
     {
-        Invoke(nameof(InitHealth), 0.1f);
+        CurrentHealth = MaxHealth;
 
         animator = GetComponent<Animator>();
         agent = GetComponent<NavMeshAgent>();
@@ -33,42 +35,58 @@ public class Health : MonoBehaviour, IDamageable
             dynamicBar = HealthBarManager.Instance.GetHealthBar(transform);
         }
     }
+    
+    public void SetHealth(float newHealth)
+    {
+        MaxHealth = newHealth;
+        CurrentHealth = MaxHealth;
+
+        // Update UI
+        if (healthBar != null)
+        {
+            healthBar.fillAmount = CurrentHealth / MaxHealth;
+        }
+        else if (dynamicBar != null)
+        {
+            dynamicBar.SetHealth(CurrentHealth / MaxHealth);
+        }
+
+        // Optionally: check for death instantly
+        if (Mathf.Approximately(CurrentHealth, 0f))
+        {
+            OnDeath?.Invoke(transform.position);
+            Die();
+        }
+    }
+    
     public void TakeDamage(float damage)
     {
-        _health -= damage;
-        _health = Mathf.Clamp(health, 0, maxHealth);
+        float damageTaken = Mathf.Clamp(damage, 0, CurrentHealth);
+        CurrentHealth -= damageTaken;
 
         // Update either static or dynamic bar
         if (healthBar != null)
         {
-            healthBar.fillAmount = health / maxHealth;
+            healthBar.fillAmount = CurrentHealth / MaxHealth;
         }
         else if (dynamicBar != null)
         {
-            dynamicBar.SetHealth(health / maxHealth);
+            dynamicBar.SetHealth(CurrentHealth / MaxHealth);
         }
 
-        if (health <= 0.0001f)
+        if (!Mathf.Approximately(damageTaken, 0f))
         {
+            OnTakeDamage?.Invoke(damageTaken);
+        }
+
+        if (Mathf.Approximately(CurrentHealth, 0f) && !Mathf.Approximately(damageTaken, 0f))
+        {
+            OnDeath?.Invoke(transform.position);
             Die();
         }
+            
     }
-
-    void InitHealth()
-    {
-        _health = maxHealth;
-
-        // Initialize health bar fill
-        if (healthBar != null)
-        {
-            healthBar.fillAmount = 1f;
-        }
-        else if (dynamicBar != null)
-        {
-            dynamicBar.SetHealth(1f);
-        }
-    }
-
+    
     void Die()
     {
         if (animator != null)

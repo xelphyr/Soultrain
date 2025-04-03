@@ -1011,7 +1011,7 @@ Transform:
   m_GameObject: {fileID: 958898642}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 335.8835, y: -615.55164, z: 648.0509}
+  m_LocalPosition: {x: 338.85, y: -615.16, z: 648.0509}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1030,21 +1030,20 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   currentWave: 0
-  selectedEngineSO: {fileID: 11400000, guid: 28efb0065cda8754fa29c37a58336814, type: 2}
-  selectedTrailerSOs:
-  - {fileID: 11400000, guid: 7762861692936534aa91348660e4d805, type: 2}
-  engine:
-    baseStats: {fileID: 0}
-    maxHealth: 0
-    baseStorage: 0
-    weapon:
-      baseStats: {fileID: 0}
-      cooldownTimer: 0
-  trailers: []
+  runtimeTrailers: []
   playerMoney: 0
   resourceCount: 0
   enemiesKilledThisWave: 0
   player: {fileID: 1971359455}
+  __alchemySerializationData_GameHandler:
+    selectedTrailerPairs:
+      isCreated: 1
+      data: "[\n    {\n        \"Key\": 0,\n        \"Value\": null\n    },\n   
+        {\n        \"Key\": 1,\n        \"Value\": 2\n    }\n]"
+    unityObjectReferences:
+    - {fileID: 11400000, guid: 11ea8b71e0345f84ab741a83de67bbba, type: 2}
+    - {fileID: 11400000, guid: 287049bbd27dd2d41b0a923c6ce4ebf0, type: 2}
+    - {fileID: 11400000, guid: fb3aa536cb84f8e409bb4faba168564c, type: 2}
 --- !u!1 &1038923881
 GameObject:
   m_ObjectHideFlags: 0
@@ -7114,13 +7113,6 @@ MonoBehaviour:
   speed: 20
   turnSpeed: 90
   gap: 0.5
-  engine:
-    baseStats: {fileID: 0}
-    maxHealth: 0
-    baseStorage: 0
-    weapon:
-      baseStats: {fileID: 0}
-      cooldownTimer: 0
   trailers: []
 --- !u!4 &1971359456
 Transform:
@@ -7149,7 +7141,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2a3bee2842defcb4a84eb2a23d443520, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxHealth: 300
+  _maxHealth: 100
   healthBar: {fileID: 4327363849319719740}
 --- !u!1 &2009244397
 GameObject:

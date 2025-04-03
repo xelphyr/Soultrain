@@ -31,7 +31,7 @@ public class EnemyHandler : MonoBehaviour
         agent.speed = properties.speed;
         agent.acceleration = properties.speed * 1.5f;
         health = gameObject.GetComponent<Health>();
-        health.maxHealth = properties.health;
+        health.SetHealth(properties.health);
     }
 
     // Update is called once per frame

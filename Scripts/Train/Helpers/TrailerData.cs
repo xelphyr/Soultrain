@@ -1,4 +1,4 @@
-using UnityEngine;
+/*using UnityEngine;
 
 [System.Serializable]
 public class TrailerData
@@ -12,7 +12,7 @@ public class TrailerData
     {
         Debug.Log("New trailerData being made");
         baseStats = so;
-        health = baseStats.baseHealth;
+        health = baseStats.stats[Stat.Health];
 
         if (so.defaultWeapon != null)
         {
@@ -37,4 +37,4 @@ public class TrailerData
         Debug.Log("Trailer Generated");
         return obj;
     }
-}
+}*/

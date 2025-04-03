@@ -8,9 +8,8 @@ public class TrainMovement : MonoBehaviour
     public float speed = 5.0f;
     public float turnSpeed = 180f;
     public float gap = 0.2f;
-
-    public EngineData engine;
-    public List<TrailerData> trailers = new List<TrailerData>(); // Prefabs for new trailers
+    
+    public List<TrailerSO> trailers = new List<TrailerSO>(); // Prefabs for new trailers
     List<GameObject> trailerGOs = new List<GameObject>(); // Instantiated trailers following the train
 
     float countUp = 0f;
@@ -26,13 +25,12 @@ public class TrainMovement : MonoBehaviour
     // Use FixedUpdate for physics-based movement
     void FixedUpdate()
     {
-        if (engine != null)
+        if (trailerGOs.Count != 0)
         {
             if (trailers.Count > 0)
             {
                 CreateTrailers();
             }
-
             Movement();
         }
     }
@@ -83,7 +81,7 @@ public class TrainMovement : MonoBehaviour
         if (trailerGOs.Count == 0 && trailers.Count > 0)
         { 
             Debug.Log("Starting Engine production");
-            GameObject temp1 = engine.MakeObject(transform.position, transform.rotation, transform);
+            GameObject temp1 = trailers[0].Spawn(transform.position, transform.rotation, transform);
             // Ensure MarkerManager exists
             if (!temp1.GetComponent<MarkerManager>())
             {
@@ -97,6 +95,7 @@ public class TrainMovement : MonoBehaviour
             }
             rb.isKinematic = true;
             trailerGOs.Add(temp1);
+            trailers.RemoveAt(0);
             Debug.Log("Finished Engine production");
         }
 
@@ -112,7 +111,7 @@ public class TrainMovement : MonoBehaviour
             if (countUp >= gap && trailers.Count > 0)
             {
                 // Instantiate a new trailer at the first marker position of the last trailer
-                GameObject temp = trailers[0].MakeObject(markM.markerList[0].position, markM.markerList[0].rotation, transform);
+                GameObject temp = trailers[0].Spawn(markM.markerList[0].position, markM.markerList[0].rotation, transform);
                 if (!temp.GetComponent<MarkerManager>())
                 {
                     temp.AddComponent<MarkerManager>();

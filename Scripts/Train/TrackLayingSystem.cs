@@ -178,7 +178,7 @@ public class TrackLayingSystem : MonoBehaviour
         meshCollider.isTrigger = false;
 
         Health segmentHealth = combinedSegment.AddComponent<Health>();
-        segmentHealth.maxHealth = segmentMaxHealth;
+        segmentHealth.SetHealth(segmentMaxHealth);
 
         foreach (var obj in tempToRecycle)
         {

@@ -1,7 +1,11 @@
+using System;
 using UnityEngine;
 using System.Collections.Generic;
+using Alchemy.Serialization;
+using Unity.VisualScripting;
 
-public class GameHandler : MonoBehaviour
+[AlchemySerialize]
+public partial class GameHandler : MonoBehaviour
 {
     public static GameHandler Instance { get; private set; }
 
@@ -11,11 +15,9 @@ public class GameHandler : MonoBehaviour
     public int currentWave;
 
     // === Engine & Trailer Setup ===
-    public EngineSO selectedEngineSO;
-    public List<TrailerSO> selectedTrailerSOs;
-
-    public EngineData engine;
-    public List<TrailerData> trailers = new List<TrailerData>();
+    [AlchemySerializeField, NonSerialized]
+    public Dictionary<TrailerSO, TurretSO> selectedTrailerPairs;
+    public List<TrailerSO> runtimeTrailers;
 
     // === Player Runtime Data ===
     public int playerMoney;
@@ -47,34 +49,31 @@ public class GameHandler : MonoBehaviour
     {
         currentWave = 1;
         enemiesKilledThisWave = 0;
+        
+        runtimeTrailers.Clear();
 
-        engine = new EngineData(selectedEngineSO);
-        trailers.Clear();
-
-        foreach (var trailerSO in selectedTrailerSOs)
+        foreach (var trailerPair in selectedTrailerPairs)
         {
-            TrailerData trailer = new TrailerData(trailerSO);
-            trailers.Add(trailer);
+            TrailerSO trailer = Instantiate(trailerPair.Key);
+            trailer.turret = trailerPair.Value;
+            runtimeTrailers.Add(trailer);
         }
-        player.engine = engine;
-        player.trailers = trailers;
-        CalculatePlayerStats();
+        player.trailers = runtimeTrailers;
+        CalculatePlayerHP();
     }
 
-    public void CalculatePlayerStats()
+    public void CalculatePlayerHP()
     {
-        float totalHP = engine.maxHealth;
-        float totalStorage = engine.baseStorage;
+        float totalHP = 0;
 
-        foreach (var trailer in trailers)
+        foreach (var trailer in runtimeTrailers)
         {
-            totalHP += trailer.health;
-            totalStorage += trailer.baseStats.baseStorage;
+            totalHP += trailer.stats.GetBasicStat(Stat.Health)??0;
         }
 
-        player.gameObject.GetComponent<Health>().maxHealth = totalHP;
+        player.gameObject.GetComponent<Stats>().SetBasicStat(Stat.Health, totalHP);
 
-        Debug.Log($"[GameHandler] Total HP: {totalHP}, Total Storage: {totalStorage}");
+        Debug.Log($"[GameHandler] Total HP: {totalHP}");
     }
 
 /*    public void PauseGame()
