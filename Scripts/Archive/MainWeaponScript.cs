@@ -1,4 +1,4 @@
-using UnityEngine;
+/*using UnityEngine;
 using UnityEngine.InputSystem;
 
 public class MainWeaponScript : MonoBehaviour
@@ -57,16 +57,16 @@ public class MainWeaponScript : MonoBehaviour
         }
 
     }
-/*
-    void LookAt(Vector3 lookPos)
-    {
-        Vector3 vectorToTarget = worldPos - weapon.position;
-        //Vector3 rotatedVectorToTarget = Quaternion.Euler(0,0,90)*vectorToTarget;
-        Quaternion targetRotation = Quaternion.LookRotation(forward: Vector3.forward, upwards: rotatedVectorToTarget);
-        weapon.rotation = targetRotation.T;
-        WeaponBase.rotation = 
-    }
-*/
+
+      ol code      void LookAt(Vector3 lookPos)
+            {
+                Vector3 vectorToTarget = worldPos - weapon.position;
+                //Vector3 rotatedVectorToTarget = Quaternion.Euler(0,0,90)*vectorToTarget;
+                Quaternion targetRotation = Quaternion.LookRotation(forward: Vector3.forward, upwards: rotatedVectorToTarget);
+                weapon.rotation = targetRotation.T;
+                WeaponBase.rotation = 
+            }
+
     public void LookAt()
     {
         // 1. Create a horizontal plane at the pivot's height.
@@ -122,7 +122,7 @@ public class MainWeaponScript : MonoBehaviour
 
     }
 }
-
+*/
 /* Code of Shame
 
         Vector3 pointA,pointB,pointC,pivotD;

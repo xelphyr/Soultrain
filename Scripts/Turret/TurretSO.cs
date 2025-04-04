@@ -1,6 +1,8 @@
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Pool;
+using UnityEngine.Serialization;
 
 [CreateAssetMenu(fileName = "Turret", menuName = "Turrets/Turret", order = 0)]
 public class TurretSO : ScriptableObject
@@ -8,40 +10,46 @@ public class TurretSO : ScriptableObject
     public Turret Type;
     public string Name;
     public GameObject ModelPrefab;
+    [HideInInspector] public TurretPrefabData ModelPrefabData;
     public Vector3 SpawnPoint;
     public Vector3 SpawnRotation;
 
-    public ShootConfigSO ShootConfig;
+    public ITargetStrategy TargetStrategy;
+    public IAttackStrategy AttackStrategy;
     public TrailConfigSO TrailConfig;
     public Stats baseStats;
 
-    private MonoBehaviour ActiveMonoBehaviour;
+    public LayerMask HitMask;
+
+    public MonoBehaviour ActiveMonoBehaviour;
     private GameObject Model;
-    private float LastShootTime;
-    private ParticleSystem ShootSystem;
+    [HideInInspector] public ParticleSystem ShootSystem;
     private ObjectPool<TrailRenderer> TrailPool;
 
     public void Spawn(Transform Parent, MonoBehaviour ActiveMonoBehaviour)
     {
         this.ActiveMonoBehaviour = ActiveMonoBehaviour;
-        LastShootTime = 0;
         TrailPool = new ObjectPool<TrailRenderer>(CreateTrail);
-        Model = Instantiate(ModelPrefab);
-        Model.transform.SetParent(Parent, false);
-        Model.transform.localPosition = SpawnPoint;
-        Model.transform.localRotation = Quaternion.Euler(SpawnRotation);
+        Model = Instantiate(ModelPrefab, SpawnPoint, Quaternion.Euler(SpawnRotation), Parent);
         
-        ShootSystem = Model.GetComponentInChildren<ParticleSystem>();
-        
+        ModelPrefabData = Model.GetComponent<TurretPrefabData>();
+        ShootSystem = ModelPrefabData.firePoint;
+        AttackStrategy = TurretAttackStrategyFactory.GetAttackStrategy(Type);
+        TargetStrategy = TurretTargetStrategyFactory.GetTargetStrategy(Type);
     }
 
-    public void Shoot(Stats stats)
+    public void TryToAttack(Stats stats, bool isEngineControlled)
     {
-        ShootConfig.Shoot(stats);
+        AttackStrategy.TryToAttack(stats, this, isEngineControlled);
+    }
+
+    public void Target(Stats stats, bool isEngineControlled, out List<Transform> targets)
+    {
+        TargetStrategy.Target(stats, this, isEngineControlled, HitMask, out targets);
     }
     
 
-    private TrailRenderer CreateTrail()
+    public TrailRenderer CreateTrail()
     {
         GameObject instance = new GameObject("BulletTrail");
         TrailRenderer trail = instance.AddComponent<TrailRenderer>();
@@ -57,7 +65,7 @@ public class TurretSO : ScriptableObject
         return trail;
     }
 
-    private IEnumerator PlayTrail(Transform StartPointTransform, Vector3 EndPoint, RaycastHit Hit, float Damage)
+    public IEnumerator PlayTrail(Transform StartPointTransform, Vector3 EndPoint, RaycastHit Hit, float Damage)
     {
         TrailRenderer instance = TrailPool.Get();
         instance.gameObject.SetActive(true);

@@ -1,0 +1,24 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b1b73aee240f8d64a9c37bb17e3efdfd, type: 3}
+  m_Name: Engine_Old
+  m_EditorClassIdentifier: 
+  engineName: Engine
+  description: 
+  baseHealth: 200
+  baseStorage: 50
+  moveSpeed: 5
+  engineSprite: {fileID: 21300000, guid: 4ae8605e339797e41baad019b77301b8, type: 3}
+  enginePrefab: {fileID: 1144849626220720427, guid: 6b0ccce8b68ac764dbd18390fcf87598, type: 3}
+  defaultWeapon: {fileID: 0}
+  regenRate: 0
+  immuneToStun: 0

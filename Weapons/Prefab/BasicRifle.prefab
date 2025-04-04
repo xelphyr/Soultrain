@@ -9,8 +9,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3857063101412513230}
-  - component: {fileID: 7141869732677429642}
-  - component: {fileID: 6624695134267911826}
+  - component: {fileID: 6496198117439938246}
+  - component: {fileID: 7245806055745651368}
   m_Layer: 6
   m_Name: BasicRifle
   m_TagString: Untagged
@@ -34,7 +34,7 @@ Transform:
   - {fileID: 2860453495951085934}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &7141869732677429642
+--- !u!114 &6496198117439938246
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -43,14 +43,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 2337441287886330018}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ac57e8e254ca42c488d89d01025b99ce, type: 3}
+  m_Script: {fileID: 11500000, guid: 812d6466b415481a89dd24316504de09, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  baseRotator: {fileID: 2860453495951085934}
-  pivotRotator: {fileID: 3901118500183711425}
-  firePoint: {fileID: 1479581648167446867}
-  currentTarget: {fileID: 0}
---- !u!114 &6624695134267911826
+--- !u!114 &7245806055745651368
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -59,19 +55,14 @@ MonoBehaviour:
   m_GameObject: {fileID: 2337441287886330018}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fa6e17d0ade146d18cdb8cd8ce4bc69b, type: 3}
+  m_Script: {fileID: 11500000, guid: 9ff7069b65534d10933287575a5bd147, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  weapon:
-    baseStats: {fileID: 0}
-    cooldownTimer: 0
-  firePoint: {fileID: 1479581648167446867}
-  enemyLayer:
-    serializedVersion: 2
-    m_Bits: 640
-  targetingRange: 20
-  aim: {fileID: 7141869732677429642}
-  isEngineControlled: 0
+  turretTransform: {fileID: 3857063101412513230}
+  baseTransform: {fileID: 2860453495951085934}
+  pivotTransform: {fileID: 3901118500183711425}
+  firePointTransform: {fileID: 1479581648167446867}
+  firePoint: {fileID: 3504410300073139031}
 --- !u!1 &3510119445601591103
 GameObject:
   m_ObjectHideFlags: 0

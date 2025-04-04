@@ -1,0 +1,21 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f173558456825054584a176a7c911d38, type: 3}
+  m_Name: Trailer
+  m_EditorClassIdentifier: 
+  trailerName: Trailer
+  description: trailer it goes in da bacc
+  isEngine: 0
+  stats: {fileID: 11400000, guid: d6941ea7117bbfd45800bc1313cbe735, type: 2}
+  trailerPrefab: {fileID: 800309992065589278, guid: 40ce3769b4c12904f85d56415029b917, type: 3}
+  trailerSprite: {fileID: 0}
+  turret: {fileID: 0}

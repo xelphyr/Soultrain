@@ -17,26 +17,27 @@ public enum TurretSubType
     Auto,
     Burst,
     Multi,
+    Shotgun,
     // Launcher subtypes
     Homing,
     Missile,
     Cannon,
     // Laser subtypes
-    Continuous,
-    Pulsed,
+    Arc,
+    Charge,
     // Shield subtypes
-    Energy,
-    Kinetic
+    Force,
+    Status
 }
 
 public static class TurretTypeValidator
 {
     private static readonly Dictionary<TurretType, TurretSubType[]> validSubTypes = new Dictionary<TurretType, TurretSubType[]>
     {
-        { TurretType.Bullet, new[] { TurretSubType.Single, TurretSubType.Auto, TurretSubType.Burst, TurretSubType.Multi } },
+        { TurretType.Bullet, new[] { TurretSubType.Single, TurretSubType.Auto, TurretSubType.Burst, TurretSubType.Multi, TurretSubType.Shotgun} },
         { TurretType.Launcher, new[] { TurretSubType.Homing, TurretSubType.Missile, TurretSubType.Cannon } },
-        { TurretType.Laser, new[] { TurretSubType.Continuous, TurretSubType.Pulsed } },
-        { TurretType.Shield, new[] { TurretSubType.Energy, TurretSubType.Kinetic } },
+        { TurretType.Laser, new[] { TurretSubType.Arc, TurretSubType.Charge } },
+        { TurretType.Shield, new[] { TurretSubType.Force, TurretSubType.Status } },
     };
 
     public static bool IsValidSubType(TurretType type, TurretSubType subType)

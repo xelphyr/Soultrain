@@ -14,7 +14,6 @@ public class TrainMovement : MonoBehaviour
 
     float countUp = 0f;
     InputAction turnAction;
-    private bool startGen = false;
 
     void Start()
     {

@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.PlayerLoop;
@@ -14,6 +15,8 @@ public class TrailerAction : MonoBehaviour
 
     public StatsManager statsManager;
 
+    private List<Transform> targets;
+
     private void Start()
     {
         TurretSelector = GetComponent<TrailerTurretSelector>();
@@ -22,16 +25,7 @@ public class TrailerAction : MonoBehaviour
 
     private void Update()
     {
-        if (isEngineControlled)
-        {
-            if (Mouse.current.leftButton.isPressed && TurretSelector.ActiveTurret != null)
-            {
-                TurretSelector.ActiveTurret.Shoot(statsManager.GetStats());
-            }
-        }
-        else
-        {
-            
-        }
+        TurretSelector.ActiveTurret.Target(statsManager.GetStats(), isEngineControlled, out targets);
+        TurretSelector.ActiveTurret.TryToAttack(statsManager.GetStats(), isEngineControlled);
     }
 }

@@ -12,6 +12,6 @@ public enum Stat
     DoT,
     Delay,
     BurstDelay,
-    
-    
+    BurstAmount,
+    AttackRange
 }

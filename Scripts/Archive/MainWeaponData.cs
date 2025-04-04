@@ -1,4 +1,4 @@
-using UnityEngine;
+/*using UnityEngine;
 
 [CreateAssetMenu(fileName = "New Weapon", menuName = "Weapon")]
 public class MainWeaponData : ScriptableObject
@@ -79,3 +79,4 @@ public class MainWeaponData : ScriptableObject
         }
     }
 }
+*/

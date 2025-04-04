@@ -1,3 +1,4 @@
+/*
 using UnityEngine;
 using System.Collections.Generic;
 
@@ -95,4 +96,4 @@ public class WeaponData
         return bullet;
     }
     
-}
+}*/
